@@ -1,0 +1,17 @@
+.previewImg{
+	width: 30%;
+	margin: 5px;
+}
+
+.previewDiv{
+	background-color: #ff0000;
+	overflow-y: scroll;
+	margin: 10px;
+	width:  60%;
+	height: 50%;
+	position: absolute;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #000000;
+}
+
