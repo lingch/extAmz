@@ -1,46 +1,39 @@
 //  
-$("table.row td.f_title a:first-of-type").click(function(event){
-	
+$(document).ready(function() {
 
-	if(document.URL.indexOf("fid=59") >= 0){
-		event.preventDefault();
-		href = $(this);
-		url = $(this).attr("href");
-		$.get(url,function(data){
-			imgdiv = $("<div></div>").addClass("previewDiv");
-			$(data).find("div.t_msgfont img").each(function (index,element){
-				$(element).addClass("previewImg");
-				imgdiv.append(element);
-			});
-			imgdiv.css({left: event.pageX, top: event.pageY});
-			imgdiv.insertAfter(href);
-			imgdiv.show();
-			imgdiv.click(function(){
-				$(this).remove();
-			});
-		})
-	}
-});
-
-$(document).ready(function(event){
-	if(document.URL.indexOf("fid=41") < 0){
-		return true;
+	if (document.URL.indexOf("/dp/") < 0) {
+		return;
 	}
 
-	$("table.row td.f_title a").each(function (index,element){
-		href = $(this);
-		url = $(this).attr("href");
-
-		$.get(url,function(data){
-			
-			description = $(data).find("div.t_msgfont").html();
-			if(description.indexOf("无码") >=0){
-				hint = $("<br>无码</br>");
-				hint.insertAfter(href);
-				hint.show();
-
-			}
+	$('<a>').text("Save")
+		.insertBefore($("#productTitle"))
+		.click(function() {
+			alert("hha");
 		})
-		
-	})
 });
+
+function saveInfo() {
+	var obj = {};
+	obj.title = $("#productTitle").text().trim();
+	obj.listPrice = $("#price > table > tbody > tr:nth-child(1) > td.a-span12.a-color-secondary.a-size-base > span").text().trim();
+	obj.price = $("#priceblock_ourprice").text().trim();
+	obj.size = $("#native_dropdown_selected_size_name > option:selected").text().trim();
+	obj.color = $("#variation_color_name > div > span").text().trim();
+	obj.features = [];
+	$("#feature-bullets > ul > li > span").each(function(idx, span) {
+		obj.features.push($(span).text().trim());
+	});
+
+	obj.detail = $.base64('encode', $("#aplus").html());
+
+	$.ajax({
+		type: "POST",
+		dataType: "json",
+		url: "http://localhost:8080/restws/json/product/get",
+		success: function(data) {
+			alert(data);
+		}
+	});
+}
+
+$(document).ready(saveInfo);

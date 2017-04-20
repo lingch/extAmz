@@ -1,5 +1,5 @@
 {
-  "name" : "Content settings",
+  "name" : "extAMZ",
   "version" : "0.2",
   "description" : "Shows the content settings for the current site.",
   "permissions": [ "contentSettings", "tabs" ],
@@ -10,9 +10,9 @@
   "manifest_version": 2,
   "content_scripts": [
     {
-      "matches": ["http://www.mimigreat.com/forumdisplay.php*"],
+      "matches": ["https://www.amazon.com/*"],
       "css": ["mystyles.css"],
-      "js": ["jquery-3.1.1.min.js", "myscript.js"]
+      "js": ["jquery-3.1.1.min.js", "jquery.base64.js","myscript.js"]
     }
   ]
 }
