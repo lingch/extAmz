@@ -8,7 +8,7 @@ $(document).ready(function() {
 	$('<a>').text("Save")
 		.insertBefore($("#productTitle"))
 		.click(function() {
-			alert("hha");
+			saveInfo();
 		})
 });
 
@@ -23,17 +23,28 @@ function saveInfo() {
 	$("#feature-bullets > ul > li > span").each(function(idx, span) {
 		obj.features.push($(span).text().trim());
 	});
-
+	obj.pictures = [];
+	$("#main-image-container > ul > li.image").each(function(idx, li) {
+		var img_src = $(li).find("img").attr("src");
+		if(img_src != undefined){
+			obj.pictures.push(img_src);
+		}
+	});
+	
 	obj.detail = $.base64('encode', $("#aplus").html());
+
+var v = JSON.stringify(obj);
 
 	$.ajax({
 		type: "POST",
 		dataType: "json",
-		url: "http://localhost:8080/restws/json/product/get",
+		data: JSON.stringify(obj),
+		contentType: "application/json; charset=utf-8",
+		url: "http://192.168.2.202:3000/AMZItem",
 		success: function(data) {
 			alert(data);
 		}
 	});
 }
 
-$(document).ready(saveInfo);
+//$(document).ready(saveInfo);
